@@ -98,7 +98,6 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
 
     implementation project(path: ':Utils14:common14')
-    implementation project(path: ':Utils1:common1')
 
     testImplementation 'junit:junit:4.13.2'
 
