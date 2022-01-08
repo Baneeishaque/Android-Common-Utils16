@@ -10,6 +10,8 @@ import java.util.List;
 import de.codecrafters.tableview.TableView;
 import de.codecrafters.tableview.toolkit.LongPressAwareTableDataAdapter;
 import ndk.utils_android1.DateUtils1;
+import ndk.utils_android16.DoubleUtils;
+import ndk.utils_android16.Float_Utils;
 import ndk.utils_android16.models.sortable_tableView.pass_book.PassBookEntryV2;
 
 import static android.graphics.Color.BLACK;
@@ -26,28 +28,28 @@ public class Pass_Book_TableView_Data_Adapter_v2 extends LongPressAwareTableData
     @Override
     public View getDefaultCellView(int rowIndex, int columnIndex, ViewGroup parentView) {
 
-        final PassBookEntryV2 pass_book_entryv2 = getRowData(rowIndex);
+        final PassBookEntryV2 passBookEntryV2 = getRowData(rowIndex);
 
         View renderedView = null;
 
         switch (columnIndex) {
             case 0:
-                renderedView = renderString(DateUtils1.normalDateTimeShortYearFormat.format(pass_book_entryv2.getInsertionDate()));
+                renderedView = renderString(DateUtils1.normalDateTimeShortYearFormat.format(passBookEntryV2.getInsertionDate()));
                 break;
             case 1:
-                renderedView = renderString(pass_book_entryv2.getParticulars());
+                renderedView = renderString(passBookEntryV2.getParticulars());
                 break;
             case 2:
-                renderedView = renderString(String.valueOf(pass_book_entryv2.getSecondAccountName()));
+                renderedView = renderString(String.valueOf(passBookEntryV2.getSecondAccountName()));
                 break;
             case 3:
-                renderedView = renderString(pass_book_entryv2.getCreditAmount() == 0 ? "" : String.valueOf(pass_book_entryv2.getCreditAmount()));
+                renderedView = renderString(passBookEntryV2.getCreditAmount() == 0 ? "" : String.valueOf(passBookEntryV2.getCreditAmount()));
                 break;
             case 4:
-                renderedView = renderString(pass_book_entryv2.getDebitAmount() == 0 ? "" : String.valueOf(pass_book_entryv2.getDebitAmount()));
+                renderedView = renderString(passBookEntryV2.getDebitAmount() == 0 ? "" : String.valueOf(passBookEntryV2.getDebitAmount()));
                 break;
             case 5:
-                renderedView = renderString(String.valueOf(pass_book_entryv2.getBalance()));
+                renderedView = renderString(String.valueOf(DoubleUtils.roundOff_to_two_positions(passBookEntryV2.getBalance())));
                 break;
         }
 

@@ -9,4 +9,12 @@ public class DoubleUtils {
         }
         return integers;
     }
+
+    public static double roundOff_to_two_positions(double x) {
+        double a = x;
+        double temp = Math.pow(10.0, 2);
+        a *= temp;
+        a = Math.round(a);
+        return (a / temp);
+    }
 }
