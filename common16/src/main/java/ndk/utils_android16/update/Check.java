@@ -5,9 +5,8 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.util.Pair;
 
-
 import ndk.utils_android1.NetworkUtils1;
-import ndk.utils_android14.BuildConfig;
+import ndk.utils_android16.BuildConfig;
 import ndk.utils_android16.network_task.update.CheckAndUpdateTask;
 
 import static ndk.utils_android14.NetworkUtils14.displayOfflineLongNoFabBottomSnackBar;
