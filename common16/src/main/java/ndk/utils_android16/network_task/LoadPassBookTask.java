@@ -106,7 +106,7 @@ public class LoadPassBookTask extends AsyncTask<Void, Void, String[]> {
 
         if (networkActionResponseArray[0].equals("1")) {
 
-            ToastUtils1.errorToast(currentActivity);
+            ToastUtils1.errorToast(currentActivity, applicationName);
 
         } else {
 

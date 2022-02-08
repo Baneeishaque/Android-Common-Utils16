@@ -165,7 +165,7 @@ public class HttpApiSelectTask extends AsyncTask<Void, Void, String[]> {
 
                 } catch (JSONException e) {
 
-                    ToastUtils1.errorToast(context);
+                    ToastUtils1.errorToast(context, applicationName);
                     LogUtils1.debug(applicationName, "Error : " + e.getLocalizedMessage());
                 }
             }
@@ -180,7 +180,7 @@ public class HttpApiSelectTask extends AsyncTask<Void, Void, String[]> {
 
                 } else {
 
-                    ToastUtils1.errorToast(context);
+                    ToastUtils1.errorToast(context, applicationName);
                 }
 
                 if (splashFlag == 1) {
@@ -216,14 +216,14 @@ public class HttpApiSelectTask extends AsyncTask<Void, Void, String[]> {
 
                             case "1":
                                 LogUtils1.debug(applicationName, "Error : " + tempJsonObject.getString("error"));
-                                ToastUtils1.errorToast(context);
+                                ToastUtils1.errorToast(context, applicationName);
                                 break;
                         }
                     }
 
                 } catch (JSONException e) {
 
-                    ToastUtils1.errorToast(context);
+                    ToastUtils1.errorToast(context, applicationName);
                     LogUtils1.debug(applicationName, "Error : " + ExceptionUtils1.getExceptionDetails(e));
                 }
             }
