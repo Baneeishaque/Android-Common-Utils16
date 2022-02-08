@@ -2,6 +2,7 @@ package ndk.utils_android16.activities;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -56,7 +57,7 @@ public abstract class LoginBaseActivity extends ActivityWithContexts14 {
         editTextUsername = findViewById(R.id.editTextUsername);
         editTextPassword = findViewById(R.id.editTextPassword);
 
-        if(BuildConfig.DEBUG){
+        if (BuildConfig.DEBUG) {
 
             editTextUsername.setText(configureTestUsername());
             editTextPassword.setText(configureTestPassword());
@@ -96,7 +97,10 @@ public abstract class LoginBaseActivity extends ActivityWithContexts14 {
 
             if (inputManager != null) {
 
-                inputManager.hideSoftInputFromWindow(Objects.requireNonNull(getCurrentFocus()).getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                View currentFocus = getCurrentFocus();
+                if (currentFocus != null) {
+                    inputManager.hideSoftInputFromWindow(currentFocus.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                }
             }
 
             performHttpApiSelectTask();
