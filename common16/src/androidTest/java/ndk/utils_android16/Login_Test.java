@@ -1,4 +1,10 @@
-package ndk.util.tests;
+package ndk.utils_android16;
+
+import static androidx.test.InstrumentationRegistry.getInstrumentation;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.typeText;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,12 +19,7 @@ import org.junit.runner.RunWith;
 
 import ndk.utils_android14.ActivityUtils14;
 import ndk.utils_android16.activities.LoginBundleActivity;
-
-import static androidx.test.InstrumentationRegistry.getInstrumentation;
-import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.typeText;
-import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import ndk.utils_android16.constants.IntentExtraFields;
 
 /**
  * Instrumented test, which will executePostThenReturnJsonObject on an Android device.
@@ -39,7 +40,7 @@ public class Login_Test {
 
             Context targetContext = getInstrumentation().getTargetContext();
 
-            return ActivityUtils14.constructIntentWithStringExtras(targetContext, LoginBundleActivity.class, new Pair[]{new Pair<>("APPLICATION_NAME", Application_Specification.APPLICATION_NAME), new Pair<>("NEXT_ACTIVITY_CLASS", "Splash_Version_OK"), new Pair<>("SELECT_USER_URL", "http://vfmob.com.md-in-64.webhostbox.net/wp-production/account_ledger_server/http_API/select_User.php")});
+            return ActivityUtils14.constructIntentWithStringExtras(targetContext, LoginBundleActivity.class, new Pair[]{new Pair<>(IntentExtraFields.APPLICATION_NAME, Application_Specification.APPLICATION_NAME), new Pair<>(IntentExtraFields.NEXT_ACTIVITY_CLASS, "Splash_Version_OK"), new Pair<>(IntentExtraFields.SELECT_USER_URL, "http://vfmob.com.md-in-64.webhostbox.net/wp-production/account_ledger_server/http_API/select_User.php")});
         }
     };
 

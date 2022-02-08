@@ -5,6 +5,7 @@ import androidx.core.util.Pair;
 import ndk.utils_android16.BuildConfig;
 import ndk.utils_android16.activities.LoginBundleActivity;
 import ndk.utils_android16.activities.SplashWithAutomatedUpdateActivity;
+import ndk.utils_android16.constants.IntentExtraFields;
 
 //TODO : Develop Backend - Single Method with operation variants
 //TODO : Add Mismatch version URL
@@ -39,8 +40,8 @@ public class Splash_Version_OK extends SplashWithAutomatedUpdateActivity {
     @Override
     public Pair[] configure_NEXT_ACTIVITY_CLASS_EXTRAS() {
 
-        return new Pair[]{new Pair<>("APPLICATION_NAME", Application_Specification.APPLICATION_NAME),
-                new Pair<>("NEXT_ACTIVITY_CLASS", "Splash_Version_OK"), new Pair<>("SELECT_USER_URL",
+        return new Pair[]{new Pair<>(IntentExtraFields.APPLICATION_NAME, Application_Specification.APPLICATION_NAME),
+                new Pair<>(IntentExtraFields.NEXT_ACTIVITY_CLASS, "Splash_Version_OK"), new Pair<>(IntentExtraFields.SELECT_USER_URL,
                 "http://vfmob.com.md-in-64.webhostbox.net/wp-production/account_ledger_server/http_API/select_User.php")};
     }
 

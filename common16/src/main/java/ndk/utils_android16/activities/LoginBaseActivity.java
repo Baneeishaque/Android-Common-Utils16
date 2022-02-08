@@ -2,6 +2,7 @@ package ndk.utils_android16.activities;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -21,6 +22,7 @@ import ndk.utils_android1.ToastUtils1;
 import ndk.utils_android14.ActivityUtils14;
 import ndk.utils_android14.ActivityWithContexts14;
 import ndk.utils_android14.RestGetTask;
+import ndk.utils_android16.BuildConfig;
 import ndk.utils_android16.R;
 import ndk.utils_android16.SharedPreferenceUtils16;
 import ndk.utils_android16.ValidationUtils16;
@@ -55,11 +57,11 @@ public abstract class LoginBaseActivity extends ActivityWithContexts14 {
         editTextUsername = findViewById(R.id.editTextUsername);
         editTextPassword = findViewById(R.id.editTextPassword);
 
-//        if(BuildConfig.DEBUG){
-//
-//            editTextUsername.setText(configureTestUsername());
-//            editTextPassword.setText(configureTestPassword());
-//        }
+        if (BuildConfig.DEBUG) {
+
+            editTextUsername.setText(configureTestUsername());
+            editTextPassword.setText(configureTestPassword());
+        }
 
         editTextPassword.setOnEditorActionListener((textView, id, keyEvent) -> {
 
@@ -95,7 +97,10 @@ public abstract class LoginBaseActivity extends ActivityWithContexts14 {
 
             if (inputManager != null) {
 
-                inputManager.hideSoftInputFromWindow(Objects.requireNonNull(getCurrentFocus()).getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                View currentFocus = getCurrentFocus();
+                if (currentFocus != null) {
+                    inputManager.hideSoftInputFromWindow(currentFocus.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                }
             }
 
             performHttpApiSelectTask();

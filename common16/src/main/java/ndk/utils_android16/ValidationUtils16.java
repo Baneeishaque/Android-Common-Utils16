@@ -80,19 +80,12 @@ public class ValidationUtils16 {
 
     public static boolean nonZeroCheckIntegerArray(int[] integers) {
 
-        for (int integer : integers) {
-
-            if (zeroCheckInteger(integer)) {
-
-                return false;
-            }
-        }
-        return true;
+        return !zeroCheckIntegerArray(integers);
     }
 
     public static boolean zeroCheckDouble(double aDouble) {
 
-        return zeroCheckInteger(Integer.parseInt(String.valueOf(aDouble)));
+        return aDouble == 0;
     }
 
     public static boolean zeroCheckDoubleArray(double[] doubles) {
@@ -102,12 +95,12 @@ public class ValidationUtils16 {
 
     public static boolean zeroCheckEditText(EditText editText) {
 
-        return zeroCheckInteger(Integer.parseInt(editText.getText().toString()));
+        return zeroCheckDouble(Double.parseDouble(editText.getText().toString()));
     }
 
     public static boolean nonZeroCheckEditText(EditText editText) {
 
-        return nonZeroCheckInteger(Integer.parseInt(editText.getText().toString()));
+        return !zeroCheckEditText(editText);
     }
 
     public static Pair<Boolean, EditText> zeroCheckEditTextPairs(Pair<EditText, String>[] editTextErrorPairs) {
@@ -154,7 +147,6 @@ public class ValidationUtils16 {
                 return org.javatuples.Pair.with(false, editTextErrorPair.getValue0());
             }
         }
-
         return org.javatuples.Pair.with(true, null);
     }
 
