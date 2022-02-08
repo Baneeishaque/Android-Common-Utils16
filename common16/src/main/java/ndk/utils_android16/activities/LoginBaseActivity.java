@@ -21,6 +21,7 @@ import ndk.utils_android1.ToastUtils1;
 import ndk.utils_android14.ActivityUtils14;
 import ndk.utils_android14.ActivityWithContexts14;
 import ndk.utils_android14.RestGetTask;
+import ndk.utils_android16.BuildConfig;
 import ndk.utils_android16.R;
 import ndk.utils_android16.SharedPreferenceUtils16;
 import ndk.utils_android16.ValidationUtils16;
@@ -55,11 +56,11 @@ public abstract class LoginBaseActivity extends ActivityWithContexts14 {
         editTextUsername = findViewById(R.id.editTextUsername);
         editTextPassword = findViewById(R.id.editTextPassword);
 
-//        if(BuildConfig.DEBUG){
-//
-//            editTextUsername.setText(configureTestUsername());
-//            editTextPassword.setText(configureTestPassword());
-//        }
+        if(BuildConfig.DEBUG){
+
+            editTextUsername.setText(configureTestUsername());
+            editTextPassword.setText(configureTestPassword());
+        }
 
         editTextPassword.setOnEditorActionListener((textView, id, keyEvent) -> {
 

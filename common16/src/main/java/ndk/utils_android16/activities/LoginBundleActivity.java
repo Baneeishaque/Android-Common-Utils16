@@ -1,7 +1,5 @@
 package ndk.utils_android16.activities;
 
-import java.util.Objects;
-
 import ndk.utils_android1.ErrorUtils;
 
 public class LoginBundleActivity extends LoginBaseActivity {
@@ -23,7 +21,7 @@ public class LoginBundleActivity extends LoginBaseActivity {
 
         try {
 
-            return Class.forName(Objects.requireNonNull(getIntent().getStringExtra("NEXT_ACTIVITY_CLASS")));
+            return Class.forName(getIntent().getStringExtra("NEXT_ACTIVITY_CLASS"));
 
         } catch (ClassNotFoundException e) {
 
@@ -33,14 +31,14 @@ public class LoginBundleActivity extends LoginBaseActivity {
     }
 
     @Override
-    public String configureTestPassword() {
+    public String configureTestUsername() {
 
-        return "9895204814";
+        return getIntent().getStringExtra("testUsername");
     }
 
     @Override
-    public String configureTestUsername() {
+    public String configureTestPassword() {
 
-        return "banee_ishaque_k_10_04_2019";
+        return getIntent().getStringExtra("testPassword");
     }
 }
