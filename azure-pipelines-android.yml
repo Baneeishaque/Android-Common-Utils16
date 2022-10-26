@@ -43,7 +43,7 @@ steps:
       jdkArchitectureOption: 'x64'
       jdkSourceOption: 'PreInstalled'
     
-  - task: Gradle@2.208.0
+  - task: Gradle@3.208.0
     displayName: 'Gradle build : Android Library'
     inputs:
       # TODO : Add build scan, upload build scan results
