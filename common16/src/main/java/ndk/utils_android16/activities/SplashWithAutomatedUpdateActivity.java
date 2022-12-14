@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.util.Pair;
 
 import ndk.utils_android14.ActivityWithContexts14;
-import ndk.utils_android16.R;
 import ndk.utils_android16.network_task.HttpApiSelectTaskWrapper;
 import ndk.utils_android16.network_task.update.CheckAndUpdateTaskWrapper;
 
@@ -40,7 +39,7 @@ public abstract class SplashWithAutomatedUpdateActivity extends ActivityWithCont
 
     public void initializeScreen() {
 
-        setContentView(R.layout.splash);
+        setContentView(ndk.utils_android14.R.layout.splash);
     }
 
     public abstract boolean configure_SECURITY_FLAG();
