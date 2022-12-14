@@ -2,7 +2,7 @@ package ndk.util.tests;
 
 import androidx.core.util.Pair;
 
-import ndk.utils_android16.BuildConfig;
+import ndk.utils_android1.DebugUtils;
 import ndk.utils_android16.activities.LoginBundleActivity;
 import ndk.utils_android16.activities.SplashWithAutomatedUpdateActivity;
 import ndk.utils_android16.constants.IntentExtraFields;
@@ -48,6 +48,6 @@ public class Splash_Version_OK extends SplashWithAutomatedUpdateActivity {
     @Override
     public boolean configure_SECURITY_FLAG() {
 
-        return BuildConfig.DEBUG;
+        return DebugUtils.isDebugBuild(getApplicationContext());
     }
 }

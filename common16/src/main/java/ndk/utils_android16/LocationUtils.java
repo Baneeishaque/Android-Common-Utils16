@@ -20,10 +20,12 @@ public class LocationUtils {
     boolean gps_enabled = false;
     boolean network_enabled = false;
     String applicationTag;
+    Context currentApplicationContext;
 
-    public LocationUtils(String applicationTag) {
+    public LocationUtils(String applicationTag, Context currentApplicationContext) {
 
         this.applicationTag = applicationTag;
+        this.currentApplicationContext = currentApplicationContext;
     }
 
     LocationListener locationListenerNetwork = new LocationListener() {
@@ -155,7 +157,7 @@ public class LocationUtils {
 
             } catch (SecurityException e) {
 
-                LogUtils1.debug(applicationTag, "exception");
+                LogUtils1.debug(applicationTag, "exception", currentApplicationContext);
             }
             //if there are both values use the latest one
             if (gps_loc != null && net_loc != null) {

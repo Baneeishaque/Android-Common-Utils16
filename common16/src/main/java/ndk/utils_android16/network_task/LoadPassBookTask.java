@@ -99,7 +99,7 @@ public class LoadPassBookTask extends AsyncTask<Void, Void, String[]> {
 
         showProgress(false, currentActivity, progressBar, scrollView);
 
-        NetworkUtils1.displayNetworkActionResponse(applicationName, networkActionResponseArray);
+        NetworkUtils1.displayNetworkActionResponse(applicationName, networkActionResponseArray, currentActivity);
 
         ArrayList<PassBookEntry> passBookEntries = new ArrayList<>();
         ArrayList<PassBookEntryV2> passBookEntryV2s = new ArrayList<>();
@@ -123,7 +123,7 @@ public class LoadPassBookTask extends AsyncTask<Void, Void, String[]> {
                     if (sortFlag) {
 
                         //TODO : Enhancement - Use Direct Pattern
-                        enterTransactions(JsonUtils.sortJsonArrayByDateInSimpleDateFormatField(tempJsonArray, DateUtils1.mySqlDateTimeFormat, "event_date_time", applicationName), passBookEntryV2s, 1);
+                        enterTransactions(JsonUtils.sortJsonArrayByDateInSimpleDateFormatField(tempJsonArray, DateUtils1.mySqlDateTimeFormat, "event_date_time", applicationName, currentActivity), passBookEntryV2s, 1);
 
                     } else {
 
@@ -143,7 +143,7 @@ public class LoadPassBookTask extends AsyncTask<Void, Void, String[]> {
 
                                     passBookEntries.add(0, new PassBookEntry(mySqlDateTimeFormat.parse(tempJsonArray.getJSONObject(i).getString("event_date_time")), tempJsonArray.getJSONObject(i).getString("particulars"), 0, Double.parseDouble(tempJsonArray.getJSONObject(i).getString("amount")), Float_Utils.roundOff_to_two_positions(balance)));
 
-                                    LogUtils1.debug(applicationName, "Balance : " + balance);
+                                    LogUtils1.debug(applicationName, "Balance : " + balance, currentActivity);
                                 }
 
                                 if (tempJsonArray.getJSONObject(i).getString("particulars").contains("Debit")) {
@@ -152,7 +152,7 @@ public class LoadPassBookTask extends AsyncTask<Void, Void, String[]> {
 
                                     passBookEntries.add(new PassBookEntry(mySqlDateTimeFormat.parse(tempJsonArray.getJSONObject(i).getString("event_date_time")), tempJsonArray.getJSONObject(i).getString("particulars"), Double.parseDouble(tempJsonArray.getJSONObject(i).getString("amount")), 0, Float_Utils.roundOff_to_two_positions(balance)));
 
-                                    LogUtils1.debug(applicationName, "Balance : " + balance);
+                                    LogUtils1.debug(applicationName, "Balance : " + balance, currentActivity);
                                 }
                             }
 

@@ -17,7 +17,7 @@ public class ServerUtils {
 
         } else if (Integer.parseInt(systemStatus) == 1) {
 
-            LogUtils1.debug(applicationName, "System Status is OK");
+            LogUtils1.debug(applicationName, "System Status is OK", context);
             return true;
         }
         return false;

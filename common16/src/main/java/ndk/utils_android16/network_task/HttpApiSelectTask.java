@@ -123,15 +123,15 @@ public class HttpApiSelectTask extends AsyncTask<Void, Void, String[]> {
     @Override
     protected String[] doInBackground(Void... params) {
 
-        LogUtils1.debug(applicationName, "URL : " + url);
+        LogUtils1.debug(applicationName, "URL : " + url, context);
         return performHttpClientGetTask(url);
     }
 
     @Override
     protected void onPostExecute(final String[] networkActionResponseArray) {
 
-        LogUtils1.debug(applicationName, "Network Action status is " + networkActionResponseArray[0]);
-        LogUtils1.debug(applicationName, "Network Action response is " + networkActionResponseArray[1]);
+        LogUtils1.debug(applicationName, "Network Action status is " + networkActionResponseArray[0], context);
+        LogUtils1.debug(applicationName, "Network Action response is " + networkActionResponseArray[1], context);
 
         if (progressFlag == 0) {
 
@@ -166,7 +166,7 @@ public class HttpApiSelectTask extends AsyncTask<Void, Void, String[]> {
                 } catch (JSONException e) {
 
                     ToastUtils1.errorToast(context, applicationName);
-                    LogUtils1.debug(applicationName, "Error : " + e.getLocalizedMessage());
+                    LogUtils1.debug(applicationName, "Error : " + e.getLocalizedMessage(), context);
                 }
             }
 
@@ -176,7 +176,7 @@ public class HttpApiSelectTask extends AsyncTask<Void, Void, String[]> {
 
                 if (backgroundFlag) {
 
-                    LogUtils1.debug(applicationName, "Error...");
+                    LogUtils1.debug(applicationName, "Error...", context);
 
                 } else {
 
@@ -204,7 +204,7 @@ public class HttpApiSelectTask extends AsyncTask<Void, Void, String[]> {
                         switch (tempJsonObject.getString("status")) {
 
                             case "2":
-                                LogUtils1.debug(applicationName, "No Entries...");
+                                LogUtils1.debug(applicationName, "No Entries...", context);
                                 if (!backgroundFlag) {
                                     ToastUtils1.longToast(context, "No Entries...");
                                 }
@@ -215,7 +215,7 @@ public class HttpApiSelectTask extends AsyncTask<Void, Void, String[]> {
                                 break;
 
                             case "1":
-                                LogUtils1.debug(applicationName, "Error : " + tempJsonObject.getString("error"));
+                                LogUtils1.debug(applicationName, "Error : " + tempJsonObject.getString("error"), context);
                                 ToastUtils1.errorToast(context, applicationName);
                                 break;
                         }
@@ -224,7 +224,7 @@ public class HttpApiSelectTask extends AsyncTask<Void, Void, String[]> {
                 } catch (JSONException e) {
 
                     ToastUtils1.errorToast(context, applicationName);
-                    LogUtils1.debug(applicationName, "Error : " + ExceptionUtils1.getExceptionDetails(e));
+                    LogUtils1.debug(applicationName, "Error : " + ExceptionUtils1.getExceptionDetails(e), context);
                 }
             }
         }

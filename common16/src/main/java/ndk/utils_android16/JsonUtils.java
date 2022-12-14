@@ -50,40 +50,40 @@ public class JsonUtils {
         return jsonObjectList;
     }
 
-    public static JSONArray sortJsonArrayInStringByUkLocaleDateField(String jsonArray, String desiredDateFormatInUkLocale, String keyField, String applicationName) {
+    public static JSONArray sortJsonArrayInStringByUkLocaleDateField(String jsonArray, String desiredDateFormatInUkLocale, String keyField, String applicationName, Context currentApplicationContext) {
 
-        return sortJsonArrayInStringByDateInSimpleDateFormatField(jsonArray, new SimpleDateFormat(desiredDateFormatInUkLocale, Locale.UK), keyField, applicationName);
+        return sortJsonArrayInStringByDateInSimpleDateFormatField(jsonArray, new SimpleDateFormat(desiredDateFormatInUkLocale, Locale.UK), keyField, applicationName, currentApplicationContext);
     }
 
-    public static JSONArray sortJsonArrayInStringByLocalizedDateField(String jsonArray, String desiredDateFormat, Locale locale, String keyField, String applicationName) {
+    public static JSONArray sortJsonArrayInStringByLocalizedDateField(String jsonArray, String desiredDateFormat, Locale locale, String keyField, String applicationName, Context currentApplicationContext) {
 
-        return sortJsonArrayInStringByDateInSimpleDateFormatField(jsonArray, new SimpleDateFormat(desiredDateFormat, locale), keyField, applicationName);
+        return sortJsonArrayInStringByDateInSimpleDateFormatField(jsonArray, new SimpleDateFormat(desiredDateFormat, locale), keyField, applicationName, currentApplicationContext);
     }
 
-    public static JSONArray sortJsonArrayInStringByDateInSimpleDateFormatField(String JSON_array, SimpleDateFormat desired_date_format, String key_field, String applicationName) {
+    public static JSONArray sortJsonArrayInStringByDateInSimpleDateFormatField(String JSON_array, SimpleDateFormat desired_date_format, String key_field, String applicationName, Context currentApplicationContext) {
 
-        return JSON_object_list_to_JSON_array(sortJsonObjectListByDateField(jsonArrayInStringToJsonObjectList(JSON_array, applicationName), desired_date_format, key_field));
+        return JSON_object_list_to_JSON_array(sortJsonObjectListByDateField(jsonArrayInStringToJsonObjectList(JSON_array, applicationName, currentApplicationContext), desired_date_format, key_field));
     }
 
-    public static JSONArray sortJsonArrayByDateInSimpleDateFormatField(JSONArray JSON_array, SimpleDateFormat desired_date_format, String key_field, String applicationName) {
+    public static JSONArray sortJsonArrayByDateInSimpleDateFormatField(JSONArray JSON_array, SimpleDateFormat desired_date_format, String key_field, String applicationName, Context currentApplicationContext) {
 
-        return JSON_object_list_to_JSON_array(sortJsonObjectListByDateField(jsonArrayToJsonObjectList(JSON_array, applicationName), desired_date_format, key_field));
+        return JSON_object_list_to_JSON_array(sortJsonObjectListByDateField(jsonArrayToJsonObjectList(JSON_array, applicationName, currentApplicationContext), desired_date_format, key_field));
     }
 
-    private static List<JSONObject> jsonArrayInStringToJsonObjectList(String jsonArray, String applicationName) {
+    private static List<JSONObject> jsonArrayInStringToJsonObjectList(String jsonArray, String applicationName, Context currentApplicationContext) {
 
         try {
 
-            return jsonArrayToJsonObjectList(new JSONArray(jsonArray), applicationName);
+            return jsonArrayToJsonObjectList(new JSONArray(jsonArray), applicationName, currentApplicationContext);
 
         } catch (JSONException e) {
 
-            LogUtils1.debug(applicationName, ExceptionUtils1.getExceptionDetails(e));
-            return jsonArrayToJsonObjectList(new JSONArray(), applicationName);
+            LogUtils1.debug(applicationName, ExceptionUtils1.getExceptionDetails(e), currentApplicationContext);
+            return jsonArrayToJsonObjectList(new JSONArray(), applicationName, currentApplicationContext);
         }
     }
 
-    private static List<JSONObject> jsonArrayToJsonObjectList(JSONArray jsonArray, String applicationName) {
+    private static List<JSONObject> jsonArrayToJsonObjectList(JSONArray jsonArray, String applicationName, Context currentApplicationContext) {
 
         List<JSONObject> JSON_object_list = new ArrayList<>();
 
@@ -94,7 +94,7 @@ public class JsonUtils {
             }
         } catch (JSONException e) {
 
-            LogUtils1.debug(applicationName, ExceptionUtils1.getExceptionDetails(e));
+            LogUtils1.debug(applicationName, ExceptionUtils1.getExceptionDetails(e), currentApplicationContext);
         }
         return JSON_object_list;
     }
@@ -109,7 +109,7 @@ public class JsonUtils {
         return JSON_array;
     }
 
-    public static void print_json_array(JSONArray JSON_array, String applicationName) {
+    public static void print_json_array(JSONArray JSON_array, String applicationName, Context currentApplicationContext) {
 
         try {
             for (int i = 0; i < JSON_array.length(); i++) {
@@ -125,7 +125,7 @@ public class JsonUtils {
             }
         } catch (JSONException e) {
 
-            LogUtils1.debug(applicationName, ExceptionUtils1.getExceptionDetails(e));
+            LogUtils1.debug(applicationName, ExceptionUtils1.getExceptionDetails(e), currentApplicationContext);
         }
 
     }
@@ -154,9 +154,9 @@ public class JsonUtils {
         return JSON_array_list;
     }
 
-    public static JSONArray sort_JSON_array_by_integer_field(String JSON_array, String key_field, String applicationName) {
+    public static JSONArray sort_JSON_array_by_integer_field(String JSON_array, String key_field, String applicationName, Context currentApplicationContext) {
 
-        return JSON_object_list_to_JSON_array(sort_JSON_array_by_integer_field(jsonArrayInStringToJsonObjectList(JSON_array, applicationName), key_field));
+        return JSON_object_list_to_JSON_array(sort_JSON_array_by_integer_field(jsonArrayInStringToJsonObjectList(JSON_array, applicationName, currentApplicationContext), key_field));
     }
 
     public static void jsonObjectFieldsToSharedPreferences(JSONObject jsonObject, boolean fieldsToIgnoreFlag, String[] fieldsToIgnore, Context applicationContext, String applicationName) {
@@ -165,7 +165,7 @@ public class JsonUtils {
 
             try {
 
-                LogUtils1.debug(applicationName, "key = " + jsonObject.names().getString(i) + " value = " + jsonObject.get(jsonObject.names().getString(i)));
+                LogUtils1.debug(applicationName, "key = " + jsonObject.names().getString(i) + " value = " + jsonObject.get(jsonObject.names().getString(i)), applicationContext);
 
                 String key = jsonObject.names().getString(i);
 
