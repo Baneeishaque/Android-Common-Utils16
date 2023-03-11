@@ -4,15 +4,14 @@ android {
 
     namespace 'ndk.util.tests'
     
-    compileSdkVersion 32
-    buildToolsVersion '30.0.3'
+    compileSdk 33
 
     defaultConfig {
 
         applicationId "ndk.util.tests"
 
         minSdkVersion 16
-        targetSdkVersion 31
+        targetSdkVersion 33
 
         versionCode 1
         versionName "1.0"
