@@ -1,7 +1,8 @@
 package ndk.util.tests;
 
 import androidx.test.rule.ActivityTestRule;
-import androidx.test.runner.AndroidJUnit4;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -14,7 +15,7 @@ import org.junit.runner.RunWith;
  */
 
 @RunWith(AndroidJUnit4.class)
-public class Splash_Version_OK_Test {
+public class SplashVersionOkTest {
 
     //TODO : Application_Utils Network Response
     //TODO : Application_Utils Next Screen
