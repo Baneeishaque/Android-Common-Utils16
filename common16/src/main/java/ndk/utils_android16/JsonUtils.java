@@ -2,26 +2,18 @@ package ndk.utils_android16;
 
 import android.content.Context;
 import android.os.Build;
-
+import android.util.Log;
 import androidx.core.util.Pair;
-
+import ndk.utils_android1.ErrorUtils;
+import ndk.utils_android1.ExceptionUtils1;
+import ndk.utils_android1.LogUtils1;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
-
-import ndk.utils_android1.ErrorUtils;
-import ndk.utils_android1.ExceptionUtils1;
-import ndk.utils_android1.LogUtils1;
+import java.util.*;
 
 public class JsonUtils {
 
@@ -41,7 +33,7 @@ public class JsonUtils {
 
                 } catch (JSONException | ParseException e) {
 
-                    e.printStackTrace();
+                    Log.e("JsonUtils", "JsonUtils.sortJsonObjectListByDateField - jsonObjectList = " + jsonObjectList + ", desiredDateFormat = " + desiredDateFormat + ", keyField = " + keyField);
                 }
                 return compare;
             });
@@ -116,9 +108,9 @@ public class JsonUtils {
 
                 JSONObject innerObj = JSON_array.getJSONObject(i);
 
-                for (Iterator it = innerObj.keys(); it.hasNext(); ) {
+                for (Iterator<String> it = innerObj.keys(); it.hasNext(); ) {
 
-                    String key = (String) it.next();
+                    String key = it.next();
                     System.out.println(key + ":" + innerObj.get(key));
                 }
                 System.out.println("---------------------------------");
@@ -145,7 +137,7 @@ public class JsonUtils {
 
                 } catch (JSONException e) {
 
-                    e.printStackTrace();
+                    Log.e("JsonUtils", "JsonUtils.sort_JSON_array_by_integer_field - JSON_array_list = " + JSON_array_list + ", key_field = " + key_field);
                 }
                 return compare;
             });
@@ -161,13 +153,13 @@ public class JsonUtils {
 
     public static void jsonObjectFieldsToSharedPreferences(JSONObject jsonObject, boolean fieldsToIgnoreFlag, String[] fieldsToIgnore, Context applicationContext, String applicationName) {
 
-        for (int i = 0; i < jsonObject.names().length(); i++) {
+        for (int i = 0; i < Objects.requireNonNull(jsonObject.names()).length(); i++) {
 
             try {
 
-                LogUtils1.debug(applicationName, "key = " + jsonObject.names().getString(i) + " value = " + jsonObject.get(jsonObject.names().getString(i)), applicationContext);
+                LogUtils1.debug(applicationName, "key = " + Objects.requireNonNull(jsonObject.names()).getString(i) + " value = " + jsonObject.get(Objects.requireNonNull(jsonObject.names()).getString(i)), applicationContext);
 
-                String key = jsonObject.names().getString(i);
+                String key = Objects.requireNonNull(jsonObject.names()).getString(i);
 
                 if (fieldsToIgnoreFlag && Arrays.asList(fieldsToIgnore).contains(key)) {
                     continue;
@@ -206,7 +198,7 @@ public class JsonUtils {
         }
     }
 
-    public static void JSON_array_to_array_list(JSONArray jsonArray, ArrayList arrayList, int start_position, Object_Utils.IGet_object iGet_object, Context context, String applicationName) {
+    public static void JSON_array_to_array_list(JSONArray jsonArray, ArrayList<Object> arrayList, int start_position, Object_Utils.IGet_object iGet_object, Context context, String applicationName) {
 
         for (int i = start_position; i < jsonArray.length(); i++) {
 

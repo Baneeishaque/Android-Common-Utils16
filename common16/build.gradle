@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.google.gms.google-services'
 
 android {
 
@@ -19,6 +18,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         useLibrary 'org.apache.http.legacy'
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -83,10 +83,6 @@ android {
         }
     }
 
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
     lintOptions {
         checkReleaseBuilds false
         abortOnError false
@@ -99,7 +95,7 @@ dependencies {
 
     implementation 'javax.inject:javax.inject:1'
 
-    implementation 'org.apache.commons:commons-lang3:3.12.0'
+    implementation 'org.apache.commons:commons-lang3:3.14.0'
     implementation 'com.itextpdf:itext-pdfa:5.5.6-1'
 
     implementation 'com.github.kimkevin:cachepot:1.2.0'
@@ -115,6 +111,12 @@ dependencies {
     implementation 'com.google.android.material:material:1.11.0'
     implementation 'androidx.legacy:legacy-support-core-utils:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.multidex:multidex:2.0.1'
 
     implementation project(path: ':Utils14:common14')
+
+    implementation 'androidx.test:monitor:1.6.1'
+    implementation 'androidx.test.espresso:espresso-core:3.5.1'
+    implementation 'androidx.test:rules:1.5.0'
+    implementation 'androidx.test.ext:junit:1.1.5'
 }

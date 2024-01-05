@@ -1,17 +1,11 @@
 package ndk.utils_android16;
 
-import static androidx.test.InstrumentationRegistry.getInstrumentation;
-import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.typeText;
-import static androidx.test.espresso.matcher.ViewMatchers.withId;
-
 import android.content.Context;
 import android.content.Intent;
 
 import androidx.core.util.Pair;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
-import androidx.test.runner.AndroidJUnit4;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -21,6 +15,12 @@ import ndk.utils_android14.ActivityUtils14;
 import ndk.utils_android16.activities.LoginBundleActivity;
 import ndk.utils_android16.constants.IntentExtraFields;
 
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.typeText;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
+
 /**
  * Instrumented test, which will executePostThenReturnJsonObject on an Android device.
  *
@@ -28,7 +28,7 @@ import ndk.utils_android16.constants.IntentExtraFields;
  */
 
 @RunWith(AndroidJUnit4.class)
-public class Login_Test {
+public class LoginTest {
 
     //TODO : Application_Utils Network Response
     //TODO : Application_Utils Next Screen
