@@ -12,7 +12,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name="ndk.utils_android16.activities.LoginBundleActivity" />
+        <activity android:name="ndk.utils_android19.activities.LoginBundleActivity" />
 
         <activity
             android:name="ndk.utils_android19.tests.Splash_Version_OK"

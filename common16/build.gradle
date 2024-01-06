@@ -3,7 +3,7 @@ apply plugin: 'com.android.library'
 android {
 
     namespace 'ndk.utils_android16'
-    
+
     compileSdk 34
     useLibrary 'org.apache.http.legacy'
 
@@ -111,9 +111,4 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
 
     implementation project(path: ':Utils14:common14')
-
-    implementation 'androidx.test:monitor:1.6.1'
-    implementation 'androidx.test.espresso:espresso-core:3.5.1'
-    implementation 'androidx.test:rules:1.5.0'
-    implementation 'androidx.test.ext:junit:1.1.5'
 }
