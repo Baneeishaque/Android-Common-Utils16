@@ -29,38 +29,8 @@ public class SharedPreferenceUtils16 extends SharedPreferencesUtils9 {
         return true;
     }
 
-    public static boolean isFirstRun(Context context, String applicationName, FirstRunActions firstRunActions) {
-        return isFirstRun(context.getSharedPreferences(applicationName, Context.MODE_PRIVATE), firstRunActions);
-    }
-
-    public static boolean isFirstRun(SharedPreferences sharedPreferences, FirstRunActions firstRunActions) {
-
-        String isFirstRunKey = "isFirstRun";
-        if (sharedPreferences.getString(isFirstRunKey, String.valueOf(true)).equals(String.valueOf(true))) {
-
-            firstRunActions.onFirstRun();
-
-            commitSharedPreferences(sharedPreferences, new PairOfStrings[]{new PairOfStrings(isFirstRunKey, String.valueOf(false))});
-            return true;
-        }
-        return false;
-    }
-
     public interface FirstRunActions {
 
         void onFirstRun();
-    }
-}
-
-class PairOfStrings extends Pair<String, String> {
-
-    /**
-     * Constructor for a Pair.
-     *
-     * @param first  the first object in the Pair
-     * @param second the second object in the pair
-     */
-    public PairOfStrings(String first, String second) {
-        super(first, second);
     }
 }
