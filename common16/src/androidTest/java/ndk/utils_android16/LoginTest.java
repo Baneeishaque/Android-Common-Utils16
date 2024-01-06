@@ -11,7 +11,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import ndk.utils_android14.ActivityUtils14;
 import ndk.utils_android16.activities.LoginBundleActivity;
 import ndk.utils_android16.constants.IntentExtraFields;
 
@@ -40,7 +39,7 @@ public class LoginTest {
 
             Context targetContext = getInstrumentation().getTargetContext();
 
-            return ActivityUtils14.constructIntentWithStringExtras(targetContext, LoginBundleActivity.class, new Pair[]{new Pair<>(IntentExtraFields.APPLICATION_NAME, Application_Specification.APPLICATION_NAME), new Pair<>(IntentExtraFields.NEXT_ACTIVITY_CLASS, "Splash_Version_OK"), new Pair<>(IntentExtraFields.SELECT_USER_URL, "http://vfmob.com.md-in-64.webhostbox.net/wp-production/account_ledger_server/http_API/select_User.php")});
+            return ActivityUtils19.constructIntentWithStringExtras(targetContext, LoginBundleActivity.class, new Pair[]{new Pair<>(IntentExtraFields.APPLICATION_NAME, Application_Specification.APPLICATION_NAME), new Pair<>(IntentExtraFields.NEXT_ACTIVITY_CLASS, "Splash_Version_OK"), new Pair<>(IntentExtraFields.SELECT_USER_URL, "http://vfmob.com.md-in-64.webhostbox.net/wp-production/account_ledger_server/http_API/select_User.php")});
         }
     };
 
