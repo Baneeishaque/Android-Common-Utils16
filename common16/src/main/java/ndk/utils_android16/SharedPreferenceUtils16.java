@@ -6,8 +6,9 @@ import android.content.SharedPreferences;
 import androidx.core.util.Pair;
 
 import ndk.utils_android1.SharedPreferencesUtils1;
+import ndk.utils_android9.SharedPreferencesUtils9;
 
-public class SharedPreferenceUtils16 {
+public class SharedPreferenceUtils16 extends SharedPreferencesUtils9 {
 
     public static void commitSharedPreferences(Context applicationContext, String applicationName, Pair[] sharedPreferencePairs) {
 
