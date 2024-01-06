@@ -10,19 +10,19 @@ import ndk.utils_android9.SharedPreferencesUtils9;
 
 public class SharedPreferenceUtils16 extends SharedPreferencesUtils9 {
 
-    public static void commitSharedPreferences(Context applicationContext, String applicationName, Pair[] sharedPreferencePairs) {
+    public static boolean commitSharedPreferences(Context applicationContext, String applicationName, Pair<String, String>[] sharedPreferencePairs) {
 
-        commitSharedPreferences(SharedPreferencesUtils1.getSharedPreferences(applicationContext, applicationName), sharedPreferencePairs);
+        return commitSharedPreferences(SharedPreferencesUtils1.getSharedPreferences(applicationContext, applicationName), sharedPreferencePairs);
     }
 
-    public static boolean commitSharedPreferences(SharedPreferences sharedPreferences, Pair[] sharedPreferencePairs) {
+    public static boolean commitSharedPreferences(SharedPreferences sharedPreferences, Pair<String, String>[] sharedPreferencePairs) {
 
         if (sharedPreferencePairs.length != 0) {
 
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            for (Pair shared_preference_pair : sharedPreferencePairs) {
+            for (Pair<String, String> shared_preference_pair : sharedPreferencePairs) {
 
-                editor.putString(shared_preference_pair.first != null ? shared_preference_pair.first.toString() : null, shared_preference_pair.second != null ? shared_preference_pair.second.toString() : null);
+                editor.putString(shared_preference_pair.first != null ? shared_preference_pair.first : null, shared_preference_pair.second != null ? shared_preference_pair.second : null);
             }
             return editor.commit();
         }
@@ -30,18 +30,7 @@ public class SharedPreferenceUtils16 extends SharedPreferencesUtils9 {
     }
 
     public static boolean isFirstRun(Context context, String applicationName, FirstRunActions firstRunActions) {
-
-        SharedPreferences settings = context.getSharedPreferences(applicationName, Context.MODE_PRIVATE);
-
-        if (settings.getString("first_run", String.valueOf(true)).equals(String.valueOf(true))) {
-
-            // Do first run stuff here then set 'first_run' as false
-            firstRunActions.onFirstRun();
-
-            commitSharedPreferences(context, applicationName, new Pair[]{new Pair<>("first_run", String.valueOf(false))});
-            return true;
-        }
-        return false;
+        return isFirstRun(context.getSharedPreferences(applicationName, Context.MODE_PRIVATE), firstRunActions);
     }
 
     public static boolean isFirstRun(SharedPreferences sharedPreferences, FirstRunActions firstRunActions) {
@@ -49,10 +38,9 @@ public class SharedPreferenceUtils16 extends SharedPreferencesUtils9 {
         String isFirstRunKey = "isFirstRun";
         if (sharedPreferences.getString(isFirstRunKey, String.valueOf(true)).equals(String.valueOf(true))) {
 
-            // Do first run stuff here then set 'isFirstRun' as false
             firstRunActions.onFirstRun();
 
-            commitSharedPreferences(sharedPreferences, new Pair[]{new Pair<>(isFirstRunKey, String.valueOf(false))});
+            commitSharedPreferences(sharedPreferences, new PairOfStrings[]{new PairOfStrings(isFirstRunKey, String.valueOf(false))});
             return true;
         }
         return false;
@@ -61,5 +49,18 @@ public class SharedPreferenceUtils16 extends SharedPreferencesUtils9 {
     public interface FirstRunActions {
 
         void onFirstRun();
+    }
+}
+
+class PairOfStrings extends Pair<String, String> {
+
+    /**
+     * Constructor for a Pair.
+     *
+     * @param first  the first object in the Pair
+     * @param second the second object in the pair
+     */
+    public PairOfStrings(String first, String second) {
+        super(first, second);
     }
 }
