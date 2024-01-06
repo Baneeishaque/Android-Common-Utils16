@@ -15,7 +15,7 @@
         <activity android:name="ndk.utils_android16.activities.LoginBundleActivity" />
 
         <activity
-            android:name=".Splash_Version_OK"
+            android:name="ndk.utils_android19.tests.Splash_Version_OK"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
