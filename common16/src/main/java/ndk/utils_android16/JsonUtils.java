@@ -3,10 +3,11 @@ package ndk.utils_android16;
 import android.content.Context;
 import android.os.Build;
 import android.util.Log;
-import androidx.core.util.Pair;
+
 import ndk.utils_android1.ErrorUtils;
 import ndk.utils_android1.ExceptionUtils1;
 import ndk.utils_android1.LogUtils1;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -149,53 +150,6 @@ public class JsonUtils {
     public static JSONArray sort_JSON_array_by_integer_field(String JSON_array, String key_field, String applicationName, Context currentApplicationContext) {
 
         return JSON_object_list_to_JSON_array(sort_JSON_array_by_integer_field(jsonArrayInStringToJsonObjectList(JSON_array, applicationName, currentApplicationContext), key_field));
-    }
-
-    public static void jsonObjectFieldsToSharedPreferences(JSONObject jsonObject, boolean fieldsToIgnoreFlag, String[] fieldsToIgnore, Context applicationContext, String applicationName) {
-
-        for (int i = 0; i < Objects.requireNonNull(jsonObject.names()).length(); i++) {
-
-            try {
-
-                LogUtils1.debug(applicationName, "key = " + Objects.requireNonNull(jsonObject.names()).getString(i) + " value = " + jsonObject.get(Objects.requireNonNull(jsonObject.names()).getString(i)), applicationContext);
-
-                String key = Objects.requireNonNull(jsonObject.names()).getString(i);
-
-                if (fieldsToIgnoreFlag && Arrays.asList(fieldsToIgnore).contains(key)) {
-                    continue;
-                }
-
-                SharedPreferenceUtils16.commitSharedPreferences(applicationContext, applicationName, new Pair[]{new Pair<>(key, jsonObject.get(key))});
-
-            } catch (JSONException json_exception) {
-
-                ErrorUtils.displayException(applicationContext, json_exception, applicationName);
-            }
-        }
-    }
-
-    public static void jsonObjectFieldsToSharedPreferencesWithoutFieldsToIgnore(JSONObject jsonObject, Context applicationContext, String applicationName) {
-        jsonObjectFieldsToSharedPreferences(jsonObject, false, new String[]{}, applicationContext, applicationName);
-    }
-
-    public static void jsonObjectFieldsToSharedPreferencesWithFieldsToIgnore(JSONObject jsonObject, String[] fieldsToIgnore, Context applicationContext, String applicationName) {
-        jsonObjectFieldsToSharedPreferences(jsonObject, true, fieldsToIgnore, applicationContext, applicationName);
-    }
-
-    public static void jsonArrayToSharedPreferencesWithFieldsToIgnore(JSONArray jsonArray, String[] fieldsToIgnore, Context applicationContext, String applicationName) {
-
-        for (int i = 0; i < jsonArray.length(); i++) {
-
-            try {
-
-                jsonObjectFieldsToSharedPreferencesWithFieldsToIgnore(jsonArray.getJSONObject(i), fieldsToIgnore, applicationContext, applicationName);
-
-            } catch (JSONException jsonException) {
-
-                ErrorUtils.displayException(applicationContext, jsonException, applicationName);
-            }
-
-        }
     }
 
     public static void JSON_array_to_array_list(JSONArray jsonArray, ArrayList<Object> arrayList, int start_position, Object_Utils.IGet_object iGet_object, Context context, String applicationName) {
