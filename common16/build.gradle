@@ -21,6 +21,7 @@ android {
         multiDexEnabled true
 
         compileOptions {
+            
             sourceCompatibility JavaVersion.VERSION_17
             targetCompatibility JavaVersion.VERSION_17
         }
@@ -90,7 +91,7 @@ android {
     }
 
     lintOptions {
-        
+
         checkReleaseBuilds false
         abortOnError false
     }
