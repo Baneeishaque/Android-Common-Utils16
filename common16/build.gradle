@@ -19,12 +19,6 @@ android {
 
         useLibrary 'org.apache.http.legacy'
         multiDexEnabled true
-
-        compileOptions {
-            
-            sourceCompatibility JavaVersion.VERSION_17
-            targetCompatibility JavaVersion.VERSION_17
-        }
     }
 
     buildTypes {
@@ -119,4 +113,10 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
 
     implementation project(path: ':Utils14:common14')
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
 }
