@@ -1,0 +1,6 @@
+{
+    "gradle.allowParallelRun": true,
+    "gradle.debug": true,
+    "gradle.nestedProjects": false,
+    "java.gradle.buildServer.openBuildOutput": "openOnBuildStart"
+}
