@@ -98,7 +98,8 @@ dependencies {
     implementation 'javax.inject:javax.inject:1'
 
     implementation 'org.apache.commons:commons-lang3:3.14.0'
-    implementation 'com.itextpdf:itext-pdfa:5.5.6-1'
+    implementation 'com.itextpdf:itextpdf:5.5.13.3'
+    implementation 'com.itextpdf:itext-pdfa:5.5.13.3'
 
     implementation 'com.chootdev:csnackbar:1.4.2'
     implementation 'de.codecrafters.tableview:tableview:2.8.1'
