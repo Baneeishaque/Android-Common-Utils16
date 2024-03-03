@@ -103,7 +103,7 @@ dependencies {
 
     implementation 'com.chootdev:csnackbar:1.4.2'
     implementation 'de.codecrafters.tableview:tableview:2.8.1'
-    implementation 'com.googlecode.libphonenumber:libphonenumber:8.13.30'
+    implementation 'com.googlecode.libphonenumber:libphonenumber:8.13.31'
     implementation 'org.javatuples:javatuples:1.2'
 
     implementation 'androidx.appcompat:appcompat:1.6.1'
