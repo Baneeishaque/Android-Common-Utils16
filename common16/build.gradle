@@ -113,7 +113,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
     implementation 'androidx.multidex:multidex:2.0.1'
 
-    implementation project(path: ':Utils14:common14')
+    implementation project(path: ':common14')
 }
 
 java {
