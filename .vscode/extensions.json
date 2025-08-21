@@ -15,7 +15,6 @@
   ],
   "gitpodAlternativeRecommendations": [
     "fittentech.fitten-code",
-    "ms-azuretools.vscode-containers",
     "nick-rudenko.back-n-forth",
     "vscode.github-authentication"
   ],
@@ -62,6 +61,7 @@
     "moshfeu.compare-folders",
     "moshfeu.diff-merge",
     "ms-azure-devops.azure-pipelines",
+    "ms-azuretools.vscode-containers",
     "ms-vscode.vscode-github-issue-notebooks",
     "oderwat.indent-rainbow",
     "onatm.open-in-new-window",
