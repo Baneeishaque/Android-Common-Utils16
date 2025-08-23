@@ -76,16 +76,21 @@ function Ensure-PSModule([string]$moduleName) {
 
 function Gradle-Wrapper([string]$args) {
     $root = $env:BUILD_SOURCESDIRECTORY
-    $bat  = Join-Path $root 'gradlew.bat'
-    $sh   = Join-Path $root 'gradlew'
+    $os = Get-OS
 
-    if (Test-Path $bat) {
-        & $bat $args
-    }
-    elseif (Test-Path $sh) {
-        & $sh $args
-    }
-    else {
-        Write-Host "Gradle wrapper not found — skipping."
+    if ($os -eq 'Windows') {
+        $wrapperPath = Join-Path $root 'gradlew.bat'
+        if (Test-Path $wrapperPath) {
+            & $wrapperPath $args
+        } else {
+            Write-Host "Gradle wrapper (gradlew.bat) not found on Windows — skipping."
+        }
+    } else { # Linux or Mac
+        $wrapperPath = Join-Path $root 'gradlew'
+        if (Test-Path $wrapperPath) {
+            & $wrapperPath $args
+        } else {
+            Write-Host "Gradle wrapper (gradlew) not found on $os — skipping."
+        }
     }
 }
