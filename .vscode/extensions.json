@@ -11,7 +11,8 @@
     "shd101wyy.markdown-preview-enhanced",
     "sindujaramaraj.app-developer-copilot",
     "sixth.sixth-ai",
-    "taichikubo.dired-plus"
+    "taichikubo.dired-plus",
+    "vstirbu.vscode-mermaid-preview"
   ],
   "gitpodAlternativeRecommendations": [
     "fittentech.fitten-code",
@@ -34,8 +35,7 @@
   "recommendations": [
     "aaron-bond.better-comments",
     "alefragnani.bookmarks",
-    "bierner.markdown-mermaid",
-    "bierner.markdown-preview-github-styles",
+    "bpruitt-goddard.mermaid-markdown-syntax-highlighting",
     "britesnow.vscode-toggle-quotes",
     "chunsen.bracket-select",
     "circlecodesolution.ccs-flutter-color",
@@ -103,7 +103,6 @@
     "vscode.yaml",
     "yatki.vscode-surround",
     "yy0931.gitconfig-lsp",
-    "yzane.markdown-pdf",
     "yzhang.markdown-all-in-one",
     "zaaack.markdown-editor",
     "zainChen.json"
