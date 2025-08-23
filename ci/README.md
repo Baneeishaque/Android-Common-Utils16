@@ -19,7 +19,20 @@ Central helper library dot‑sourced by all other scripts.
 - `Invoke-WebContent` – Safe web content fetcher (works in PS5 and PS7).
 - `Ensure-PackageManagers` – Installs or ensures Scoop (Windows) / Brew (POSIX).
 - `Ensure-Mise` – Installs mise via Scoop or Brew and adds shims to `PATH`.
+- `Get-MisePaths` – Returns the platform-native cache and data directories for mise.
 - `Gradle-Wrapper` – Runs `gradlew` or `gradlew.bat` if present.
+
+---
+
+### `set-cache-vars.ps1`
+
+Sets pipeline variables for platform-specific `mise` cache directories.
+
+**What it does:**
+
+- Detects the OS and gets the correct `mise` cache/data paths from `common.ps1`.
+- Sets `MiseDataPath` and `MiseCachePath` pipeline variables for the `Cache@2` task.
+- Creates the directories if they don't exist to prevent `tar` errors on cache miss.
 
 ---
 
@@ -30,10 +43,9 @@ Sets up **Java** via [mise](https://mise.jdx.dev/) with guardrails and audit sig
 **What it does:**
 
 1. Dot‑sources `common.ps1` helpers.
-2. Sets `MISE_DATA_DIR` and `MISE_CACHE_DIR` for the unified cache step in the pipeline.
-3. Ensures package managers and installs mise.
-4. Reads the Java pin from `mise.toml`.
-5. Installs Java and validates:
+2. Ensures package managers and installs mise.
+3. Reads the Java pin from `mise.toml`.
+4. Installs Java and validates:
    - Pin drift (current version matches `mise.toml`).
    - Active `java` on PATH matches mise’s.
    - `JAVA_HOME` and JVM’s `java.home` agree.
@@ -89,13 +101,19 @@ pwsh ./ci/gradle-stop.ps1
 Typical Azure Pipelines YAML usage:
 
 ```yaml
+- task: PowerShell@2
+  displayName: Set mise cache paths
+  inputs:
+    filePath: $(Build.SourcesDirectory)/ci/set-cache-vars.ps1
+    pwsh: true
+
 - task: Cache@2
   displayName: mise cache
   inputs:
     key: mise | $(Agent.OS) | $(Agent.OSArchitecture) | $(Build.SourcesDirectory)/mise.toml
     path: |
-      $(MISE_DATA_DIR)
-      $(MISE_CACHE_DIR)
+      $(MiseDataPath)
+      $(MiseCachePath)
 
 - task: PowerShell@2
   displayName: Setup runtimes via mise and verify
@@ -131,11 +149,17 @@ flowchart LR
         A4[Invoke-WebContent]
         A5[Ensure-PackageManagers]
         A6[Ensure-Mise]
-        A7[Gradle-Wrapper]
+        A7[Get-MisePaths]
+        A8[Gradle-Wrapper]
+    end
+
+    subgraph SetVars["ci/set-cache-vars.ps1"]
+        S1[Get-MisePaths]
+        S2[Set pipeline vars]
+        S3[Create cache dirs]
     end
 
     subgraph Setup["ci/setup-mise-java.ps1"]
-        B1[Set MISE_DATA_DIR / MISE_CACHE_DIR vars]
         B2[Get-MisePinVersion]
         B3[Install-Java-And-Guard]
         B4[Audit: All java binaries]
@@ -150,8 +174,10 @@ flowchart LR
         D1[Gradle-Wrapper --stop]
     end
 
+    Common --> SetVars
     Common --> Setup
     Common --> Build
+    SetVars --> Setup
     Setup --> Build
     Build --> Stop
 ```

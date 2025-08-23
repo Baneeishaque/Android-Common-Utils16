@@ -69,3 +69,7 @@ To get started:
     ```
 
 💡 These scripts are self‑auditing — check the log for PATH changes, Java pins, and Gradle’s detected JDK.
+
+---
+
+*Curious about how this pipeline ticks? Dive into our [CI Scripts Documentation](./ci/README.md).*
