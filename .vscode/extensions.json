@@ -34,6 +34,7 @@
   "recommendations": [
     "aaron-bond.better-comments",
     "alefragnani.bookmarks",
+    "bierner.markdown-mermaid",
     "bierner.markdown-preview-github-styles",
     "britesnow.vscode-toggle-quotes",
     "chunsen.bracket-select",
@@ -105,8 +106,7 @@
     "yzane.markdown-pdf",
     "yzhang.markdown-all-in-one",
     "zaaack.markdown-editor",
-    "zainChen.json",
-    "vstirbu.vscode-mermaid-preview"
+    "zainChen.json"
   ],
   "recommendationsFromGitHub": [],
   "vscodeAlternativeRecommendations": [
