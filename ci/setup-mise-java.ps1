@@ -66,16 +66,6 @@ function Install-Java-And-Guard([string]$pin) {
 # ---- MAIN EXECUTION ----
 $os = Get-OS
 
-# Standardize mise directories across all OSes for consistent caching.
-# This overrides the platform-specific defaults (e.g., ~/Library/Caches on macOS).
-# The pipeline's Cache@2 task will use these same hardcoded paths.
-$env:MISE_DATA_DIR = Join-Path $env:HOME '.local/share/mise'
-$env:MISE_CACHE_DIR = Join-Path $env:HOME '.cache/mise'
-Write-Host "Forcing mise data directory to: $env:MISE_DATA_DIR"
-Write-Host "Forcing mise cache directory to: $env:MISE_CACHE_DIR"
-Write-Host "##vso[task.setvariable variable=MISE_DATA_DIR]$env:MISE_DATA_DIR"
-Write-Host "##vso[task.setvariable variable=MISE_CACHE_DIR]$env:MISE_CACHE_DIR"
-
 # Bootstrap managers and mise
 Ensure-PackageManagers -os $os
 Ensure-Mise -os $os

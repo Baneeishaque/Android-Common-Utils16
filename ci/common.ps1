@@ -74,6 +74,29 @@ function Ensure-PSModule([string]$moduleName) {
     }
 }
 
+function Get-MisePaths([string]$os) {
+    $home = $env:HOME
+    if ([string]::IsNullOrWhiteSpace($home)) {
+        # Fallback for non-standard environments, e.g. Windows PowerShell 5.1
+        $home = $env:USERPROFILE
+    }
+
+    $paths = @{}
+    if ($os -eq 'Windows') {
+        $localAppData = $env:LOCALAPPDATA
+        if ([string]::IsNullOrWhiteSpace($localAppData)) { throw "LOCALAPPDATA env var not found on Windows." }
+        $paths.Data = Join-Path $localAppData 'mise\data'
+        $paths.Cache = Join-Path $localAppData 'mise\cache'
+    } elseif ($os -eq 'Mac') {
+        $paths.Data = Join-Path $home 'Library/Application Support/mise'
+        $paths.Cache = Join-Path $home 'Library/Caches/mise'
+    } else { # Linux and other POSIX
+        $paths.Data = Join-Path $home '.local/share/mise'
+        $paths.Cache = Join-Path $home '.cache/mise'
+    }
+    return $paths
+}
+
 function Gradle-Wrapper([string]$executableArgs) {
     $os = Get-OS
 

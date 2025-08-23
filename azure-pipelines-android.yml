@@ -44,17 +44,19 @@ steps:
       restoreKeys: gradleUserHome
       path: $(Agent.HomeDirectory)/.gradle
 
-  - task: Cache@2
-    displayName: Cache mise data
+  - task: PowerShell@2
+    displayName: Set mise cache paths
     inputs:
-      key: mise-data | $(Agent.OS) | $(Agent.OSArchitecture) | $(Build.SourcesDirectory)/mise.toml
-      path: $(Agent.HomeDirectory)/.local/share/mise
+      filePath: $(Build.SourcesDirectory)/ci/set-cache-vars.ps1
+      pwsh: true
 
   - task: Cache@2
-    displayName: Cache mise cache
+    displayName: Cache mise (data and cache dirs)
     inputs:
-      key: mise-cache | $(Agent.OS) | $(Agent.OSArchitecture) | $(Build.SourcesDirectory)/mise.toml
-      path: $(Agent.HomeDirectory)/.cache/mise
+      key: mise | $(Agent.OS) | $(Agent.OSArchitecture) | $(Build.SourcesDirectory)/mise.toml
+      path: |
+        $(MiseDataPath)
+        $(MiseCachePath)
 
   - task: PowerShell@2
     displayName: Setup runtimes via mise and verify
