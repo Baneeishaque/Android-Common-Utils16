@@ -44,12 +44,6 @@ steps:
       restoreKeys: gradleUserHome
       path: $(Agent.HomeDirectory)/.gradle
 
-  - task: PowerShell@2
-    displayName: Setup runtimes via mise and verify
-    inputs:
-      filePath: $(Build.SourcesDirectory)/ci/setup-mise-java.ps1
-      pwsh: true
-
   - task: Cache@2
     displayName: Cache mise data
     inputs:
@@ -61,6 +55,12 @@ steps:
     inputs:
       key: mise-cache | $(Agent.OS) | $(Agent.OSArchitecture) | $(Build.SourcesDirectory)/mise.toml
       path: $(Agent.HomeDirectory)/.cache/mise
+
+  - task: PowerShell@2
+    displayName: Setup runtimes via mise and verify
+    inputs:
+      filePath: $(Build.SourcesDirectory)/ci/setup-mise-java.ps1
+      pwsh: true
 
   - task: PowerShell@2
     displayName: "Gradle build : Android Library"
