@@ -56,7 +56,6 @@ function Install-Java-And-Guard([string]$pin) {
     }
 
     # Guard 3: Major version match
-    # TODO: Exact version match
     $pinMajor = ([regex]::Match($pin, '\d+(\.\d+)?').Value)
     $ver = & java -version 2>&1
     if ($pinMajor -and ($ver -notmatch [regex]::Escape($pinMajor))) {
