@@ -29,10 +29,10 @@ function Install-Java-And-Guard([string]$pin) {
     mise install
 
     # Pin drift check
-    $current = (mise ls --current java) -join "`n"
-    Write-Host "mise ls --current java:`n$current"
-    if ($current -notmatch [regex]::Escape($pin)) {
-        throw "Pin drift: expected '$pin' but got:`n$current"
+    $currentVersion = (mise current java).Trim()
+    Write-Host "mise current java reports: '$currentVersion'"
+    if ($currentVersion -notlike "$pin*") {
+        throw "Pin drift: Active version '$currentVersion' does not satisfy the pin '$pin' from mise.toml."
     }
 
     $jHome = (mise where java).Trim()
