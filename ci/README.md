@@ -91,6 +91,16 @@ Typical Azure Pipelines YAML usage:
 
 ---
 
+## Visual Flow
+![Visual Flow](./diagrams/visual-flow.mmd)
+
+---
+
+## Timeline & Data Flow
+![Timeline & Data Flow](./diagrams/timeline-data-flow.mmd)
+
+---
+
 ## Notes for Contributors
 - No inline script duplication — all helpers live in `common.ps1`.
 - Keep `mise.toml` in repo root as the single source of truth for Java version.

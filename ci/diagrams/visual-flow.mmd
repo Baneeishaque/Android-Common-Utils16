@@ -1,0 +1,30 @@
+flowchart LR
+    subgraph Common["ci/common.ps1"]
+        A1[Get-OS]
+        A2[Add-Path]
+        A3[Ensure-BrewOnPath]
+        A4[Invoke-WebContent]
+        A5[Ensure-PackageManagers]
+        A6[Ensure-Mise]
+        A7[Gradle-Wrapper]
+    end
+
+    subgraph Setup["ci/setup-mise-java.ps1"]
+        B1[Set MISE_DATA_DIR / MISE_CACHE_DIR vars]
+        B2[Get-MisePinVersion]
+        B3[Install-Java-And-Guard]
+        B4[Audit: All java binaries]
+        B5[Audit: Gradle sees JDK]
+    end
+
+    subgraph Build["Pipeline Build Stage"]
+        C1["Gradle@3 build"]
+    end
+
+    subgraph Stop["ci/gradle-stop.ps1"]
+        D1[Gradle-Wrapper --stop]
+    end
+
+    Common --> Setup
+    Setup --> Build
+    Build --> Stop
