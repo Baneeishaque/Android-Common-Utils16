@@ -8,16 +8,21 @@
 . (Join-Path $PSScriptRoot 'common.ps1')
 
 function Get-MisePinVersion {
-    $tomlPath = Join-Path $env:BUILD_SOURCESDIRECTORY 'mise.toml'
-    if (-not (Test-Path $tomlPath)) { throw "mise.toml not found at $tomlPath" }
-    $raw = Get-Content -Raw -Path $tomlPath
-    $m = [regex]::Match($raw, '^\s*
+    $tomlPath = Join-Path $env:BUILD_SOURCESDIRECTORY "mise.toml"
+    if (-not (Test-Path $tomlPath)) { throw "mise.toml not found at '$tomlPath'" }
 
-\[tools\]
+    try {
+        $tomlContent = Get-Content -Raw -Path $tomlPath | ConvertFrom-Toml
+        $javaVersion = $tomlContent.tools.java
+    }
+    catch {
+        throw "Failed to parse mise.toml. Error: $_"
+    }
 
-[\s\S]*?^\s*java\s*=\s*"(.*?)"', 'Multiline')
-    if (-not $m.Success) { throw "Could not find java pin in mise.toml" }
-    return $m.Groups[1].Value
+    if ([string]::IsNullOrWhiteSpace($javaVersion)) {
+        throw "Could not find 'tools.java' in mise.toml or it is empty."
+    }
+    return $javaVersion
 }
 
 function Install-Java-And-Guard([string]$pin) {
@@ -64,6 +69,7 @@ $os = Get-OS
 # Bootstrap managers and mise
 Ensure-PackageManagers -os $os
 Ensure-Mise -os $os
+Ensure-PSModule 'powershell-toml'
 
 # Install and verify Java
 $pin = Get-MisePinVersion

@@ -69,6 +69,13 @@ function Ensure-Mise([string]$os) {
     (& mise --version) | Write-Host
 }
 
+function Ensure-PSModule([string]$moduleName) {
+    if (-not (Get-Module -ListAvailable -Name $moduleName)) {
+        Write-Host "Installing PowerShell module '$moduleName'..."
+        Install-Module -Name $moduleName -Scope CurrentUser -Repository PSGallery -Force -Confirm:$false
+    }
+}
+
 function Gradle-Wrapper([string]$args) {
     $root = $env:BUILD_SOURCESDIRECTORY
     $bat  = Join-Path $root 'gradlew.bat'
