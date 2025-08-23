@@ -48,7 +48,6 @@ function Invoke-WebContent([string]$uri) {
 function Ensure-PackageManagers([string]$os) {
     if ($os -eq 'Windows') {
         if (-not (Get-Command scoop -ErrorAction SilentlyContinue)) {
-            Set-ExecutionPolicy -Scope CurrentUser RemoteSigned -Force
             $script = Invoke-WebContent 'https://get.scoop.sh'
             Invoke-Expression $script
         }
