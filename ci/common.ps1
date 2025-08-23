@@ -23,6 +23,7 @@ function Get-OS {
 function Add-Path([string]$p) {
     if (-not [string]::IsNullOrWhiteSpace($p) -and (Test-Path $p)) {
         Write-Host "##vso[task.prependpath]$p"
+        $env:PATH = "$p$([System.IO.Path]::PathSeparator)$($env:PATH)"
     }
 }
 
