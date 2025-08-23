@@ -8,10 +8,12 @@
     "javac",
     "JHOME",
     "jitpack",
+    "linuxbrew",
     "pipefail",
     "prependpath",
     "pwsh",
     "setvariable",
+    "SOURCESDIRECTORY",
     "vsts",
     "whitesource",
     "Xshow"
