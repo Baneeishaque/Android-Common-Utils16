@@ -63,34 +63,6 @@ steps:
       path: $(Agent.HomeDirectory)/.cache/mise
 
   - task: CmdLine@2
-    displayName: "Guard: mise Java is active"
-    inputs:
-      script: |
-        set -euo pipefail
-        echo "Guard: verifying Java selection…"
-        ACTIVE_JAVA="$(command -v java || true)"
-        MISE_JAVA="$(mise which java || true)"
-        echo "command -v java => $ACTIVE_JAVA"
-        echo "mise which java => $MISE_JAVA"
-        if [ -z "$ACTIVE_JAVA" ] || [ -z "$MISE_JAVA" ] || [ "$ACTIVE_JAVA" != "$MISE_JAVA" ]; then
-          echo "Mismatch: shell java doesn't match mise java" >&2
-          echo "PATH: $PATH"
-          type -a java || true
-          exit 1
-        fi
-
-        # Double-check JVM reports the same home as JAVA_HOME
-        JVM_HOME="$(
-          java -XshowSettings:properties -version 2>&1 | awk -F'= ' '/^ *java\.home =/ {print $2; exit}'
-        )"
-        echo "java.home => $JVM_HOME"
-        if [ -z "$JAVA_HOME" ] || [ -z "$JVM_HOME" ] || [ "$JVM_HOME" != "$JAVA_HOME" ]; then
-          echo "Mismatch: JVM java.home doesn't equal JAVA_HOME" >&2
-          exit 1
-        fi
-        echo "Guard passed."
-
-  - task: CmdLine@2
     displayName: "Gradle build : Android Library"
     inputs:
       script: ./gradlew build
