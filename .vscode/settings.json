@@ -7,6 +7,7 @@
         "gradlew",
         "javac",
         "JHOME",
+        "pipefail",
         "prependpath",
         "pwsh",
         "setvariable"
