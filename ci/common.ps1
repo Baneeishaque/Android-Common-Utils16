@@ -75,10 +75,10 @@ function Ensure-PSModule([string]$moduleName) {
 }
 
 function Get-MisePaths([string]$os) {
-    $home = $env:HOME
-    if ([string]::IsNullOrWhiteSpace($home)) {
+    $userHomePath = $env:HOME
+    if ([string]::IsNullOrWhiteSpace($userHomePath)) {
         # Fallback for non-standard environments, e.g. Windows PowerShell 5.1
-        $home = $env:USERPROFILE
+        $userHomePath = $env:USERPROFILE
     }
 
     $paths = @{}
@@ -88,11 +88,11 @@ function Get-MisePaths([string]$os) {
         $paths.Data = Join-Path $localAppData 'mise\data'
         $paths.Cache = Join-Path $localAppData 'mise\cache'
     } elseif ($os -eq 'Mac') {
-        $paths.Data = Join-Path $home 'Library/Application Support/mise'
-        $paths.Cache = Join-Path $home 'Library/Caches/mise'
+        $paths.Data = Join-Path $userHomePath 'Library/Application Support/mise'
+        $paths.Cache = Join-Path $userHomePath 'Library/Caches/mise'
     } else { # Linux and other POSIX
-        $paths.Data = Join-Path $home '.local/share/mise'
-        $paths.Cache = Join-Path $home '.cache/mise'
+        $paths.Data = Join-Path $userHomePath '.local/share/mise'
+        $paths.Cache = Join-Path $userHomePath '.cache/mise'
     }
     return $paths
 }
