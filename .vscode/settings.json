@@ -7,11 +7,13 @@
     "gradlew",
     "javac",
     "JHOME",
+    "jitpack",
     "pipefail",
     "prependpath",
     "pwsh",
     "setvariable",
     "vsts",
+    "whitesource",
     "Xshow"
   ],
   "yaml.schemas": {
