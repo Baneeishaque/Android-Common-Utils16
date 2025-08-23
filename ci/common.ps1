@@ -50,7 +50,6 @@ function Ensure-PackageManagers([string]$os) {
         if (-not (Get-Command scoop -ErrorAction SilentlyContinue)) {
             Invoke-Expression "& {$(Invoke-WebContent 'https://get.scoop.sh')} -RunAsAdmin"
         }
-        scoop bucket add main | Out-Null
     } else {
         Ensure-BrewOnPath -os $os
         if (-not (Get-Command brew -ErrorAction SilentlyContinue)) {
@@ -60,7 +59,7 @@ function Ensure-PackageManagers([string]$os) {
 }
 
 function Ensure-Mise([string]$os) {
-    if ($os -eq 'Windows') { scoop install main/mise }
+    if ($os -eq 'Windows') { scoop install main/mise extras/vcredist2022 }
     else { brew update; brew install mise }
     Add-Path "$HOME/.local/bin"
     Add-Path "$HOME/.local/share/mise/shims"
