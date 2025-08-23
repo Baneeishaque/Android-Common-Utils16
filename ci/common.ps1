@@ -75,7 +75,12 @@ function Ensure-PSModule([string]$moduleName) {
 }
 
 function Gradle-Wrapper([string]$args) {
+    # In Azure Pipelines, BUILD_SOURCESDIRECTORY is set. For local runs, infer it.
     $root = $env:BUILD_SOURCESDIRECTORY
+    if ([string]::IsNullOrWhiteSpace($root)) {
+        # Assume PSScriptRoot is '.../repo/ci', so root is '.../repo'
+        $root = (Get-Item (Join-Path $PSScriptRoot '..')).FullName
+    }
     $os = Get-OS
 
     if ($os -eq 'Windows') {

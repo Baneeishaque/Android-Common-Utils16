@@ -8,7 +8,12 @@
 . (Join-Path $PSScriptRoot 'common.ps1')
 
 function Get-MisePinVersion {
-    $tomlPath = Join-Path $env:BUILD_SOURCESDIRECTORY "mise.toml"
+    # In Azure Pipelines, BUILD_SOURCESDIRECTORY is set. For local runs, infer it.
+    $root = $env:BUILD_SOURCESDIRECTORY
+    if ([string]::IsNullOrWhiteSpace($root)) {
+        $root = (Get-Item (Join-Path $PSScriptRoot '..')).FullName
+    }
+    $tomlPath = Join-Path $root "mise.toml"
     if (-not (Test-Path $tomlPath)) { throw "mise.toml not found at '$tomlPath'" }
 
     try {

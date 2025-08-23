@@ -45,6 +45,23 @@ pwsh ./ci/setup-mise-java.ps1
 
 ---
 
+### `gradle-build.ps1`
+
+Runs the main Gradle build.
+
+**What it does:**
+
+- Dot‑sources `common.ps1` for `Gradle-Wrapper`.
+- Calls `gradlew build`.
+
+**Run locally:**
+
+```powershell
+pwsh ./ci/gradle-build.ps1
+```
+
+---
+
 ### `gradle-stop.ps1`
 Stops the Gradle daemon after builds.
 
@@ -77,8 +94,11 @@ Typical Azure Pipelines YAML usage:
     filePath: $(Build.SourcesDirectory)/ci/setup-mise-java.ps1
     pwsh: true
 
-- task: Gradle@3
+- task: PowerShell@2
   displayName: Gradle build
+  inputs:
+    filePath: $(Build.SourcesDirectory)/ci/gradle-build.ps1
+    pwsh: true
   env:
     JAVA_HOME: $(JAVA_HOME)
 
@@ -112,8 +132,8 @@ flowchart LR
         B5[Audit: Gradle sees JDK]
     end
 
-    subgraph Build["Pipeline Build Stage"]
-        C1["Gradle@3 build"]
+    subgraph Build["ci/gradle-build.ps1"]
+        C1[Gradle-Wrapper build]
     end
 
     subgraph Stop["ci/gradle-stop.ps1"]
@@ -121,6 +141,7 @@ flowchart LR
     end
 
     Common --> Setup
+    Common --> Build
     Setup --> Build
     Build --> Stop
 ```

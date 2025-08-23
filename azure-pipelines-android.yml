@@ -62,10 +62,11 @@ steps:
       key: mise-cache | $(Agent.OS) | $(Agent.OSArchitecture) | $(Build.SourcesDirectory)/mise.toml
       path: $(Agent.HomeDirectory)/.cache/mise
 
-  - task: CmdLine@2
+  - task: PowerShell@2
     displayName: "Gradle build : Android Library"
     inputs:
-      script: ./gradlew build
+      filePath: $(Build.SourcesDirectory)/ci/gradle-build.ps1
+      pwsh: true
     env:
       JAVA_HOME: $(JAVA_HOME)
 
