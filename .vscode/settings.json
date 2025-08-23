@@ -7,6 +7,7 @@
         "gradlew",
         "javac",
         "prependpath",
+        "pwsh",
         "setvariable"
     ]
 }
