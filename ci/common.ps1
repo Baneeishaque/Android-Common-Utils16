@@ -50,6 +50,7 @@ function Ensure-PackageManagers([string]$os) {
         if (-not (Get-Command scoop -ErrorAction SilentlyContinue)) {
             Invoke-Expression "& {$(Invoke-WebContent 'https://get.scoop.sh')} -RunAsAdmin"
         }
+        scoop bucket add extras | Out-Null
     } else {
         Ensure-BrewOnPath -os $os
         if (-not (Get-Command brew -ErrorAction SilentlyContinue)) {
