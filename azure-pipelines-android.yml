@@ -12,6 +12,8 @@ trigger:
       - '.travis.yml'
       - '.gitpod.*'
       - '.gitignore'
+      - 'ci/README.md'
+      - 'ci/diagrams/*'
       - '.vscode/*'
       - '.run/*'
       - '.devcontainer/*'
