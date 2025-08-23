@@ -8,9 +8,11 @@ They are **cross‑platform** (Windows / Linux / macOS) and compatible with **Po
 ## Files
 
 ### `common.ps1`
+
 Central helper library dot‑sourced by all other scripts.
 
 **Provides:**
+
 - `Get-OS` – Detects current OS.
 - `Add-Path` – Prepends a directory to `PATH` for the current pipeline/job.
 - `Ensure-BrewOnPath` – Ensures Homebrew paths are in `PATH` for macOS/Linux.
@@ -22,9 +24,11 @@ Central helper library dot‑sourced by all other scripts.
 ---
 
 ### `setup-mise-java.ps1`
+
 Sets up **Java** via [mise](https://mise.jdx.dev/) with guardrails and audit signals.
 
 **What it does:**
+
 1. Dot‑sources `common.ps1` helpers.
 2. Sets `MISE_DATA_DIR` and `MISE_CACHE_DIR` for the unified cache step in the pipeline.
 3. Ensures package managers and installs mise.
@@ -39,6 +43,7 @@ Sets up **Java** via [mise](https://mise.jdx.dev/) with guardrails and audit sig
    - Shows the JDK Gradle will use (`gradlew -version`).
 
 **Run locally:**
+
 ```powershell
 pwsh ./ci/setup-mise-java.ps1
 ```
@@ -63,13 +68,16 @@ pwsh ./ci/gradle-build.ps1
 ---
 
 ### `gradle-stop.ps1`
+
 Stops the Gradle daemon after builds.
 
 **What it does:**
+
 - Dot‑sources `common.ps1` for `Gradle-Wrapper`.
 - Calls `gradlew --stop` if wrapper exists.
 
 **Run locally:**
+
 ```powershell
 pwsh ./ci/gradle-stop.ps1
 ```
@@ -77,6 +85,7 @@ pwsh ./ci/gradle-stop.ps1
 ---
 
 ## Pipeline Wiring
+
 Typical Azure Pipelines YAML usage:
 
 ```yaml
@@ -112,6 +121,7 @@ Typical Azure Pipelines YAML usage:
 ---
 
 ## Visual Flow
+
 ```mermaid
 flowchart LR
     subgraph Common["ci/common.ps1"]
@@ -149,6 +159,7 @@ flowchart LR
 ---
 
 ## Timeline & Data Flow
+
 ```mermaid
 sequenceDiagram
     participant Agent as Build Agent
@@ -185,6 +196,7 @@ sequenceDiagram
 ---
 
 ## Notes for Contributors
+
 - No inline script duplication — all helpers live in `common.ps1`.
 - Keep `mise.toml` in repo root as the single source of truth for Java version.
 - Scripts are self‑auditing — read the log output for PATH changes, Java binaries, and Gradle’s JDK.
@@ -208,6 +220,7 @@ Below are common hiccups you might see when running these scripts locally or in 
 | Cache step skipped or empty | `MISE_DATA_DIR` / `MISE_CACHE_DIR` not set in prior step | Ensure setup script runs before `Cache@2` in pipelines, or set vars manually. |
 
 ### Debugging Tips
+
 - **Run locally first**: Use `pwsh ./ci/setup-mise-java.ps1` to reproduce pipeline setup.
 - **Verbose logging**: Temporarily add `Write-Host` calls to echo `PATH` and key env vars.
 - **Inspect `PATH` order**: On mac/Linux, `echo $PATH` — on PS, `$env:PATH -split ';'`.
@@ -231,33 +244,9 @@ These commands let you verify the most common setup and audit steps locally, on 
 | Stop Gradle daemon | `pwsh ./ci/gradle-stop.ps1` | Should say “Stopping Gradle daemon…” or skip gracefully if wrapper missing. |
 
 ### Quick Tips
+
 - Run from repo root so relative paths to `ci/*.ps1` work.
 - Use `-Verbose` on any script call to see more internal output if you’ve added verbose logs.
 - If something fails locally but works in CI, compare `Get-OS` + `PATH` output between environments.
 
 ---
-
-## Quick Start
-This project uses a modular, cross‑platform CI setup powered by PowerShell 5.1+/7+ and mise. All pipeline setup, build, and teardown logic lives in `ci/` with clear docs, diagrams, and troubleshooting tips.
-
-To get started:
-1.  **Read `ci/README.md`** — it explains:
-    - What each CI script does (`common.ps1`, `setup-mise-java.ps1`, `gradle-stop.ps1`)
-    - How they link together in Azure Pipelines
-    - Visual flow & sequence diagrams
-    - Self‑test commands you can run locally
-2.  **Prerequisites**: Make sure you have PowerShell installed (Core or Windows), plus Homebrew (macOS/Linux) or Scoop (Windows) if you’re testing locally.
-3.  **Run a full setup with audits**:
-    ```powershell
-    pwsh ./ci/setup-mise-java.ps1
-    ```
-4.  **Build with**:
-    ```powershell
-    ./gradlew build
-    ```
-5.  **Stop the Gradle daemon**:
-    ```powershell
-    pwsh ./ci/gradle-stop.ps1
-    ```
-
-💡 These scripts are self‑auditing — check the log for PATH changes, Java pins, and Gradle’s detected JDK.
