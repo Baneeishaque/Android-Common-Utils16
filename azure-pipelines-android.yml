@@ -16,8 +16,20 @@ trigger:
       - '.run/*'
       - '.devcontainer/*'
 
+strategy:
+  matrix:
+    linux:
+      imageName: 'ubuntu-latest'
+      osFam: 'linux'
+    mac:
+      imageName: 'macos-latest'
+      osFam: 'mac'
+    windows:
+      imageName: 'windows-latest'
+      osFam: 'windows'
+
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: $(imageName)
 
 steps:
   - checkout: self
@@ -30,32 +42,11 @@ steps:
       restoreKeys: gradleUserHome
       path: $(Agent.HomeDirectory)/.gradle
 
-  - task: CmdLine@2
-    displayName: Install mise
+  - task: PowerShell@2
+    displayName: Setup runtimes via mise and verify
     inputs:
-      script: |
-        set -euo pipefail
-        curl -fsSL https://mise.run | sh
-        echo "##vso[task.prependpath]$HOME/.local/bin"
-        echo "##vso[task.prependpath]$HOME/.local/share/mise/shims"
-        mise --version
-
-  - task: CmdLine@2
-    displayName: Install Java via mise
-    inputs:
-      script: |
-        set -euo pipefail
-        mise install
-        JHOME="$(mise where java)"
-        if [ -z "$JHOME" ]; then
-          echo "Failed to resolve JAVA_HOME via 'mise where java'" >&2
-          exit 1
-        fi
-        echo "Detected JAVA_HOME: $JHOME"
-        echo "##vso[task.setvariable variable=JAVA_HOME]$JHOME"
-        echo "##vso[task.prependpath]$JHOME/bin"
-        java -version
-        javac -version
+      filePath: $(Build.SourcesDirectory)/ci/setup-mise-java.ps1
+      pwsh: true
 
   - task: Cache@2
     displayName: Cache mise data
@@ -104,7 +95,8 @@ steps:
     env:
       JAVA_HOME: $(JAVA_HOME)
 
-  - task: CmdLine@2
-    displayName: Stop Gradle Daemon
+  - task: PowerShell@2
+    displayName: Stop Gradle daemon
     inputs:
-      script: ./gradlew --stop
+      filePath: $(Build.SourcesDirectory)/ci/gradle-stop.ps1
+      pwsh: true

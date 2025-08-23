@@ -1,0 +1,85 @@
+<#
+.SYNOPSIS
+  Common helper functions for CI/CD PowerShell scripts (PS 5.1+ / 7+).
+
+.DESCRIPTION
+  Centralizes:
+    - OS detection
+    - Safe path prepending
+    - Homebrew path injection
+    - Web content fetcher (PS5-safe)
+    - Package manager bootstrap (brew/scoop)
+    - mise install helper
+    - Gradle wrapper runner (cross‑OS)
+#>
+
+function Get-OS {
+    $plat = [System.Runtime.InteropServices.RuntimeInformation]::OSDescription
+    if ($plat -match 'Windows') { return 'Windows' }
+    if ($plat -match 'Darwin|Mac OS') { return 'Mac' }
+    return 'Linux'
+}
+
+function Add-Path([string]$p) {
+    if (-not [string]::IsNullOrWhiteSpace($p) -and (Test-Path $p)) {
+        Write-Host "##vso[task.prependpath]$p"
+    }
+}
+
+function Ensure-BrewOnPath([string]$os) {
+    if ($os -eq 'Linux') {
+        Add-Path '/home/linuxbrew/.linuxbrew/bin'
+        Add-Path '/home/linuxbrew/.linuxbrew/sbin'
+    } elseif ($os -eq 'Mac') {
+        Add-Path '/opt/homebrew/bin'
+        Add-Path '/usr/local/bin'
+    }
+}
+
+function Invoke-WebContent([string]$uri) {
+    if ($PSVersionTable.PSVersion.Major -ge 6) {
+        return (Invoke-WebRequest -Uri $uri).Content
+    } else {
+        return (Invoke-WebRequest -UseBasicParsing -Uri $uri).Content
+    }
+}
+
+function Ensure-PackageManagers([string]$os) {
+    if ($os -eq 'Windows') {
+        if (-not (Get-Command scoop -ErrorAction SilentlyContinue)) {
+            Set-ExecutionPolicy -Scope CurrentUser RemoteSigned -Force
+            $script = Invoke-WebContent 'https://get.scoop.sh'
+            Invoke-Expression $script
+        }
+        scoop bucket add main | Out-Null
+    } else {
+        Ensure-BrewOnPath -os $os
+        if (-not (Get-Command brew -ErrorAction SilentlyContinue)) {
+            throw "Homebrew not found on $os. Preinstall or add to PATH."
+        }
+    }
+}
+
+function Ensure-Mise([string]$os) {
+    if ($os -eq 'Windows') { scoop install main/mise }
+    else { brew update; brew install mise }
+    Add-Path "$HOME/.local/bin"
+    Add-Path "$HOME/.local/share/mise/shims"
+    (& mise --version) | Write-Host
+}
+
+function Gradle-Wrapper([string]$args) {
+    $root = $env:BUILD_SOURCESDIRECTORY
+    $bat  = Join-Path $root 'gradlew.bat'
+    $sh   = Join-Path $root 'gradlew'
+
+    if (Test-Path $bat) {
+        & $bat $args
+    }
+    elseif (Test-Path $sh) {
+        & $sh $args
+    }
+    else {
+        Write-Host "Gradle wrapper not found — skipping."
+    }
+}
