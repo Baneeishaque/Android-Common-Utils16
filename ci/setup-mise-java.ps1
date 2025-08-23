@@ -69,7 +69,7 @@ $os = Get-OS
 # Bootstrap managers and mise
 Ensure-PackageManagers -os $os
 Ensure-Mise -os $os
-Ensure-PSModule 'powershell-toml'
+Ensure-PSModule 'PSToml'
 
 # Install and verify Java
 $pin = Get-MisePinVersion

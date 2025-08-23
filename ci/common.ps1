@@ -48,8 +48,7 @@ function Invoke-WebContent([string]$uri) {
 function Ensure-PackageManagers([string]$os) {
     if ($os -eq 'Windows') {
         if (-not (Get-Command scoop -ErrorAction SilentlyContinue)) {
-            $script = Invoke-WebContent 'https://get.scoop.sh'
-            Invoke-Expression $script
+            Invoke-Expression "& {$(Invoke-WebContent 'https://get.scoop.sh')} -RunAsAdmin"
         }
         scoop bucket add main | Out-Null
     } else {
