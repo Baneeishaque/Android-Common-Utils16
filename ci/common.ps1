@@ -74,28 +74,22 @@ function Ensure-PSModule([string]$moduleName) {
     }
 }
 
-function Gradle-Wrapper([string]$args) {
-    # In Azure Pipelines, BUILD_SOURCESDIRECTORY is set. For local runs, infer it.
-    $root = $env:BUILD_SOURCESDIRECTORY
-    if ([string]::IsNullOrWhiteSpace($root)) {
-        # Assume PSScriptRoot is '.../repo/ci', so root is '.../repo'
-        $root = (Get-Item (Join-Path $PSScriptRoot '..')).FullName
-    }
+function Gradle-Wrapper([string]$executableArgs) {
     $os = Get-OS
 
     if ($os -eq 'Windows') {
-        $wrapperPath = Join-Path $root 'gradlew.bat'
+        $wrapperPath = '.\gradlew.bat'
         if (Test-Path $wrapperPath) {
-            & $wrapperPath $args
+            & $wrapperPath $executableArgs
         } else {
-            Write-Host "Gradle wrapper (gradlew.bat) not found on Windows — skipping."
+            Write-Host "Gradle wrapper ($wrapperPath) not found in current directory. Please run from repo root. Skipping."
         }
     } else { # Linux or Mac
-        $wrapperPath = Join-Path $root 'gradlew'
+        $wrapperPath = './gradlew'
         if (Test-Path $wrapperPath) {
-            & $wrapperPath $args
+            & $wrapperPath $executableArgs
         } else {
-            Write-Host "Gradle wrapper (gradlew) not found on $os — skipping."
+            Write-Host "Gradle wrapper ($wrapperPath) not found in current directory. Please run from repo root. Skipping."
         }
     }
 }
