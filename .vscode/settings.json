@@ -1,16 +1,23 @@
 {
-    "gradle.allowParallelRun": true,
-    "gradle.debug": true,
-    "gradle.nestedProjects": false,
-    "java.gradle.buildServer.openBuildOutput": "openOnBuildStart",
-    "cSpell.words": [
-        "gradlew",
-        "javac",
-        "JHOME",
-        "pipefail",
-        "prependpath",
-        "pwsh",
-        "setvariable",
-        "Xshow"
+  "gradle.allowParallelRun": true,
+  "gradle.debug": true,
+  "gradle.nestedProjects": false,
+  "java.gradle.buildServer.openBuildOutput": "openOnBuildStart",
+  "cSpell.words": [
+    "gradlew",
+    "javac",
+    "JHOME",
+    "pipefail",
+    "prependpath",
+    "pwsh",
+    "setvariable",
+    "vsts",
+    "Xshow"
+  ],
+  "yaml.schemas": {
+    "https://raw.githubusercontent.com/microsoft/azure-pipelines-vscode/master/service-schema.json": [
+      "azure-pipelines.yml",
+      "azure-pipelines-*.yml"
     ]
+  }
 }
