@@ -61,12 +61,13 @@
     "mhutchie.git-graph",
     "moshfeu.compare-folders",
     "moshfeu.diff-merge",
-    "ms-azuretools.vscode-containers",
     "ms-azure-devops.azure-pipelines",
+    "ms-azuretools.vscode-containers",
+    "ms-vscode.powershell",
     "ms-vscode.vscode-github-issue-notebooks",
+    "nur-srijan.markdown-rich-preview",
     "oderwat.indent-rainbow",
     "onatm.open-in-new-window",
-    "nur-srijan.markdown-rich-preview",
     "pedrocaetano.azure-pipeline-runner",
     "phillipcao.debug-current",
     "piotrpalarz.vscode-gitignore-generator",
@@ -82,6 +83,7 @@
     "sysoev.vscode-open-in-github",
     "takkao.open-window-tab-context",
     "tamasfe.even-better-toml",
+    "tylerleonhardt.vscode-inline-values-powershell",
     "usernamehw.errorlens",
     "vscode.configuration-editing",
     "vscode.docker",
@@ -93,6 +95,7 @@
     "vscode.markdown",
     "vscode.markdown-language-features",
     "vscode.merge-conflict",
+    "vscode.powershell",
     "vscode.references-view",
     "vscode.search-result",
     "vscode.terminal-suggest",
@@ -104,8 +107,7 @@
     "zaaack.markdown-editor",
     "zainChen.json"
   ],
-  "recommendationsFromGitHub": [
-  ],
+  "recommendationsFromGitHub": [],
   "vscodeAlternativeRecommendations": [
     "vscode.theme-defaults"
   ]
