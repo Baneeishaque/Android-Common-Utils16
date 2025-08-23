@@ -38,6 +38,7 @@ function Install-Java-And-Guard([string]$pin) {
     $jHome = (mise where java).Trim()
     if (-not $jHome) { throw "Failed to resolve JAVA_HOME via 'mise where java'" }
     Write-Host "##vso[task.setvariable variable=JAVA_HOME]$jHome"
+    $env:JAVA_HOME = $jHome
     Add-Path (Join-Path $jHome 'bin')
 
     # Guard 1: PATH java matches mise java
